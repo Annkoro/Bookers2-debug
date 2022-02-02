@@ -16,6 +16,19 @@
         </td>
         <td><%= link_to book.title,book, class: "book_#{book.id}" %></td>
         <td><%= book.body %></td>
+        <!--いいね機能-->
+        <td>
+          <% if current_user.already_favorited?(book) %>
+            <%= link_to book_favorites_path(book), method: :delete do %>
+            <i class="fas fa-heart"></i>
+           <% end %>
+          <% else %>
+            <%= link_to book_favorites_path(book), method: :post do %>
+            <i class="far fa-heart"></i>
+            <% end %>
+          <% end %>
+          <%= book.favorites.count %>
+        </td>
       </tr>
     <% end %>
   </tbody>
