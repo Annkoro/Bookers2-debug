@@ -10,7 +10,13 @@ Rails.application.routes.draw do
     resources :book_comments, only: [:create, :destroy]
   end
 
-  resources :users, only: [:index,:show,:edit,:update]
+  resources :users, only: [:index,:show,:edit,:update] do
+    resource :relationships, only: [:create, :destroy]
+     # "あるユーザーがフォローしている人全員を表示させるためのルーティング"
+    get :followings, on: :member
+     # "あるユーザーをフォローしてくれている人全員（フォロワー一覧画面）をとってくるためのルーティング"
+    get :followers, on: :member
+  end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
