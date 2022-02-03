@@ -11,9 +11,9 @@ class User < ApplicationRecord
   # "自分がフォローされる側"
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: :followed_id, dependent: :destroy
    # "フォローしてくれている人全員をとってくる"
-  has_many :followers , through: :reverse_of_relationships, source: :follwer
+  has_many :followers , through: :reverse_of_relationships, source: :follower
   # "自分がフォローする側"
-  has_many :relationships, class_name: 'Relationship', foreign_key: :follwer_id, dependent: :destroy
+  has_many :relationships, class_name: 'Relationship', foreign_key: :follower_id, dependent: :destroy
   # "フォローしている人全員をとってくる"
   has_many :followings, through: :relationships, source: :followed
 
