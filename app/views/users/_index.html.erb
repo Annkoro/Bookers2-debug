@@ -12,21 +12,7 @@
         <td><%= image_tag user.get_profile_image, size: '50x50' %></td>
         <td><%= user.name %></td>
 
-        <td>
-          <% if user != current_user %>
-            <%= link_to user_relationships_path(user), method: :post do %>
-            <button class="btn btn-primary">フォロー</button>
-            <% end %>
-          <% end %>
-        </td>
-
-        <td>
-          <% if user != current_user %>
-            <%= link_to user_relationships_path(user), method: :delete do %>
-            <button class="btn btn-primary">フォロー解除</button>
-            <% end %>
-          <% end %>
-        </td>
+        <td><%= render "relationships/btn", user: user %></td>
 
         <td><%= link_to 'Show', user_path(user), class: "user_#{user.id}" %></td>
       </tr>

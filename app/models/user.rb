@@ -8,14 +8,15 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
 
-  # "フォローする側"
-  has_many :relationships, class_name: 'Relationship', foreign_key: :follwed_id, dependent: :destroy
-  # "あるユーザーがフォローしている人全員をとってくる"
-  has_many :followeds, through: :relationships, source: :follower
-  # "フォローされる側"
-  has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: :follower_id, dependent: :destroy
-  # "あるユーザーをフォローしてくれている人全員をとってくる"
-  has_many :followers , through: :reverse_of_relationships, source: :follwed
+  # "自分がフォローされる側"
+  has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: :followed_id, dependent: :destroy
+   # "フォローしてくれている人全員をとってくる"
+  has_many :followers , through: :reverse_of_relationships, source: :follwer
+  # "自分がフォローする側"
+  has_many :relationships, class_name: 'Relationship', foreign_key: :follwer_id, dependent: :destroy
+  # "フォローしている人全員をとってくる"
+  has_many :followings, through: :relationships, source: :followed
+
 
   has_one_attached :profile_image
 
@@ -32,7 +33,16 @@ class User < ApplicationRecord
     self.favorites.exists?(book_id: book.id)
   end
 
-  def is_followed_by?(user)
-    reverse_of_relationships.find_by(followed_id: user.id).present?
+
+  def follow(user)
+    relationships.create(followed_id: user.id)
+  end
+
+  def unfollow(user)
+    relationships.find_by(followed_id: user.id).destroy
+  end
+
+  def following?(user)
+    followings.include?(user)
   end
 end

@@ -10,7 +10,6 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @book = Book.new
-    @user = User.where.not(id: current_user.id)
   end
 
   def edit

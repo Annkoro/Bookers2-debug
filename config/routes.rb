@@ -12,12 +12,14 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index,:show,:edit,:update] do
     resource :relationships, only: [:create, :destroy]
-     # "あるユーザーがフォローしている人全員を表示させるためのルーティング"
-    get :followings, on: :member
-     # "あるユーザーをフォローしてくれている人全員（フォロワー一覧画面）をとってくるためのルーティング"
-    get :followers, on: :member
+    get 'followings' => 'relationships#followings', as: 'followings'
+  	get 'followers' => 'relationships#followers', as: 'followers'
+    # # "あるユーザーがフォローしている人全員を表示させるためのルーティング"
+    # get :followings, on: :member
+    # # "あるユーザーをフォローしてくれている人全員（フォロワー一覧画面）をとってくるためのルーティング"
+    # get :followers, on: :member
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
+  get '/search', to: 'searches#search'
 end
