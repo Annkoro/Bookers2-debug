@@ -12,7 +12,9 @@
     <%= render 'layouts/header' %>
       <main>
         <p id="notice"><%= notice %></p>
-        <%= render 'searches/search' %>
+        <div class="d-flex justify-content-center mb-2">
+          <%= render 'searches/search' %>
+        </div>
         <%= yield %>
 
       </main>
